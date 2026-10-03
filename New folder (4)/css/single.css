@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --bg: #0a0e1a;
+  --surface: #121829;
+  --surface-2: #182036;
+  --line: #242d47;
+  --ink: #e9edf8;
+  --muted: #8b95b2;
+  --cyan: #35e0ff;
+  --violet: #7c5cff;
+  --pink: #ff4d8d;
+  --danger: #ff4d6d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 16px;
+  color: var(--ink);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(124, 92, 255, 0.2), transparent 60%),
+    radial-gradient(800px 500px at 100% 100%, rgba(53, 224, 255, 0.14), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* Sahifa sarlavhasi ("single storage") */
+body > h1 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  animation: cardIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* ================= Asosiy karta ================= */
+.single {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  width: 100%;
+  max-width: 900px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 24px;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(from var(--angle), var(--cyan), var(--violet), var(--pink), var(--cyan)) border-box;
+  box-shadow: 0 0 40px rgba(124, 92, 255, 0.25), 0 20px 50px rgba(0, 0, 0, 0.45);
+  animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both, spin 6s linear infinite;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes spin {
+  to { --angle: 360deg; }
+}
+
+/* ---------- Rasm ---------- */
+.single_img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  padding: 28px;
+  object-fit: contain;
+  color: transparent; /* bo'sh alt yozuvi ko'rinmasin */
+  background: linear-gradient(160deg, #1d2745, #241b45);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s;
+}
+
+.single:hover .single_img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 12px 28px rgba(124, 92, 255, 0.55));
+}
+
+/* Rasm kattalashganda kartadan chiqib ketmasligi uchun */
+.single {
+  isolation: isolate;
+}
+
+/* ---------- Matn qismi ---------- */
+.single_body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 64px 32px 36px;
+}
+
+.single_title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #fff, var(--cyan) 65%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Narx: yonib turuvchi pill */
+.single_price {
+  padding: 6px 18px;
+  border: 1px solid rgba(124, 92, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.16);
+  color: #d5ccff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  box-shadow: 0 0 18px rgba(124, 92, 255, 0.35);
+  transition: box-shadow 0.25s, background 0.25s, color 0.25s;
+}
+
+.single_price::before {
+  content: "$";
+  margin-right: 2px;
+  opacity: 0.7;
+}
+
+.single_price:hover {
+  background: rgba(124, 92, 255, 0.32);
+  color: #fff;
+  box-shadow: 0 0 28px rgba(124, 92, 255, 0.85);
+}
+
+.single_desc {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* ================= Delete tugmasi ================= */
+.singleDelet {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  overflow: hidden;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--danger);
+  border-radius: 999px;
+  background: rgba(10, 14, 26, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--danger);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.trash_fill {
+  font-style: normal;
+}
+
+/* Axlat qutisi belgisi */
+.trash_fill::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  vertical-align: -2px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Yorug'lik "supurgisi" */
+.singleDelet::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+}
+
+.singleDelet:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--danger), var(--pink));
+  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.18), 0 0 28px rgba(255, 77, 109, 0.75);
+  transform: translateY(-2px);
+}
+
+.singleDelet:hover::after {
+  animation: sweep 0.8s ease;
+}
+
+.singleDelet:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.singleDelet:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+@keyframes sweep {
+  to { left: 140%; }
+}
+
+/* ================= Mobil ================= */
+@media (max-width: 720px) {
+  .single {
+    grid-template-columns: 1fr;
+  }
+
+  .single_img {
+    min-height: 260px;
+    max-height: 340px;
+  }
+
+  .single_body {
+    padding: 24px 22px 30px;
+  }
+}
+
+/* Animatsiyani yoqtirmaydiganlar uchun */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,318 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --bg: #0a0e1a;
+  --surface: #121829;
+  --surface-2: #182036;
+  --line: #242d47;
+  --ink: #e9edf8;
+  --muted: #8b95b2;
+  --cyan: #35e0ff;
+  --violet: #7c5cff;
+  --pink: #ff4d8d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  color: var(--ink);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(124, 92, 255, 0.18), transparent 60%),
+    radial-gradient(800px 500px at 100% 0%, rgba(53, 224, 255, 0.12), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* ================= Asosiy karta ================= */
+.single {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: 44px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: 22px;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(from var(--angle), var(--cyan), var(--violet), var(--pink), var(--cyan)) border-box;
+  box-shadow: 0 0 40px rgba(124, 92, 255, 0.25), 0 20px 50px rgba(0, 0, 0, 0.45);
+  animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both, spin 6s linear infinite;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes spin {
+  to { --angle: 360deg; }
+}
+
+/* ---------- Rasm ---------- */
+.single_img {
+  width: 170px;
+  height: 170px;
+  padding: 5px;
+  border-radius: 50%;
+  object-fit: cover;
+  color: var(--muted);
+  font-size: 0.8rem;
+  background: conic-gradient(from var(--angle), var(--cyan), var(--violet), var(--pink), var(--cyan));
+  box-shadow: 0 0 30px rgba(53, 224, 255, 0.35);
+  animation: spin 4s linear infinite;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s;
+}
+
+.single_img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 44px rgba(124, 92, 255, 0.7);
+}
+
+/* ---------- Matn ---------- */
+.single_title {
+  margin-top: 22px;
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #fff, var(--cyan) 60%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.single_text {
+  margin-top: 10px;
+  max-width: 100%;
+  padding: 6px 16px;
+  border: 1px solid rgba(124, 92, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.14);
+  color: #c4b8ff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  transition: box-shadow 0.25s, background 0.25s, color 0.25s;
+}
+
+.single_text:hover {
+  background: rgba(124, 92, 255, 0.3);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(124, 92, 255, 0.7);
+}
+
+/* ---------- Edit tugmasi ---------- */
+.edit {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  overflow: hidden;
+  height: 38px;
+  padding: 0 18px;
+  border: 1px solid var(--cyan);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cyan);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.edit::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+}
+
+.edit:hover {
+  color: #06121f;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  box-shadow: 0 0 0 3px rgba(53, 224, 255, 0.15), 0 0 26px rgba(53, 224, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+.edit:hover::after {
+  animation: sweep 0.8s ease;
+}
+
+.edit:active {
+  transform: scale(0.95);
+}
+
+.edit:focus-visible,
+.updateBtn:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 3px;
+}
+
+@keyframes sweep {
+  to { left: 140%; }
+}
+
+/* ================= Update oynasi (modal) =================
+   JS klassni .updateBox -> .updateBox_open ga almashtiradi,
+   shuning uchun ikkalasiga ham umumiy uslub berilgan */
+.updateBox,
+.updateBox_open {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 50;
+  width: min(92vw, 400px);
+  padding: 28px 24px 24px;
+  flex-direction: column;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  transform: translate(-50%, -50%);
+}
+
+.updateBox {
+  display: none;
+}
+
+.updateBox_open {
+  display: flex;
+  /* Katta soya = orqa fonni xiralashtiradi */
+  box-shadow:
+    0 0 0 100vmax rgba(5, 8, 16, 0.75),
+    0 0 40px rgba(53, 224, 255, 0.25),
+    0 24px 60px rgba(0, 0, 0, 0.6);
+  animation: popIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.94); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ---------- Inputlar ---------- */
+.imgUpdate,
+.titleUpdate,
+.descUpdate {
+  width: 100%;
+  height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.imgUpdate::placeholder,
+.titleUpdate::placeholder,
+.descUpdate::placeholder {
+  color: var(--muted);
+}
+
+.imgUpdate:hover,
+.titleUpdate:hover,
+.descUpdate:hover {
+  border-color: #33406a;
+}
+
+.imgUpdate:focus,
+.titleUpdate:focus,
+.descUpdate:focus {
+  outline: none;
+  border-color: var(--cyan);
+  background: #1c2540;
+  box-shadow: 0 0 0 3px rgba(53, 224, 255, 0.15), 0 0 22px rgba(53, 224, 255, 0.35);
+}
+
+/* ---------- Update tugmasi ---------- */
+.updateBtn {
+  position: relative;
+  overflow: hidden;
+  height: 48px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--violet), var(--cyan));
+  color: #fff;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(124, 92, 255, 0.45);
+  transition: box-shadow 0.25s, transform 0.2s, filter 0.25s;
+}
+
+.updateBtn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+}
+
+.updateBtn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.2), 0 0 32px rgba(53, 224, 255, 0.75);
+}
+
+.updateBtn:hover::after {
+  animation: sweep 0.8s ease;
+}
+
+.updateBtn:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 480px) {
+  .single {
+    padding: 64px 20px 28px;
+  }
+
+  .single_img {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* Animatsiyani yoqtirmaydiganlar uchun */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

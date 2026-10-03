@@ -1,0 +1,392 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+/* Aylanuvchi gradient chegara uchun */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --bg: #0a0e1a;
+  --surface: #121829;
+  --surface-2: #182036;
+  --line: #242d47;
+  --ink: #e9edf8;
+  --muted: #8b95b2;
+  --cyan: #35e0ff;
+  --violet: #7c5cff;
+  --pink: #ff4d8d;
+  --danger: #ff4d6d;
+  --radius: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(124, 92, 255, 0.18), transparent 60%),
+    radial-gradient(800px 500px at 100% 0%, rgba(53, 224, 255, 0.12), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* JS klassni .loading -> .loading_open ga almashtiradi.
+   display: contents header'ning sticky ishlashi uchun kerak */
+.loading,
+.loading_open {
+  display: contents;
+}
+
+/* ---------- Loading yozuvi ---------- */
+.loading_title {
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, var(--muted) 0%, var(--cyan) 50%, var(--muted) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: rgba(10, 14, 26, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: dropIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Header ostidagi harakatlanuvchi neon chiziq */
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--violet), var(--cyan), var(--pink), transparent);
+  background-size: 200% 100%;
+  animation: flow 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes flow {
+  to { background-position: -200% 0; }
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.header_title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: linear-gradient(90deg, #fff, var(--cyan) 60%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Qidiruv ---------- */
+.searchName {
+  flex: 0 1 340px;
+  width: 100%;
+  height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s, flex-basis 0.35s;
+}
+
+.searchName::placeholder {
+  color: var(--muted);
+}
+
+.searchName:hover {
+  border-color: #33406a;
+}
+
+.searchName:focus {
+  outline: none;
+  flex-basis: 420px;
+  background: var(--surface-2);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(53, 224, 255, 0.15), 0 0 24px rgba(53, 224, 255, 0.35);
+}
+
+/* ---------- Chiqish tugmasi ---------- */
+.header_logout {
+  position: relative;
+  overflow: hidden;
+  height: 44px;
+  padding: 0 24px;
+  border: 1px solid var(--danger);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--danger);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+/* Yorug'lik "supurgisi" */
+.header_logout::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+}
+
+.header_logout:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--danger), var(--pink));
+  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.18), 0 0 28px rgba(255, 77, 109, 0.7);
+  transform: translateY(-2px);
+}
+
+.header_logout:hover::after {
+  animation: sweep 0.8s ease;
+}
+
+.header_logout:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 0 14px rgba(255, 77, 109, 0.6);
+}
+
+.header_logout:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+@keyframes sweep {
+  to { left: 140%; }
+}
+
+/* ---------- Kartalar to'ri ---------- */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 22px;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 40px);
+}
+
+.container > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  /* padding-box: karta foni, border-box: chegara rangi */
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(var(--line), var(--line)) border-box;
+  animation: cardIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s;
+}
+
+/* Kartalar birin-ketin chiqadi */
+.container > div:nth-child(1)  { animation-delay: 0.05s; }
+.container > div:nth-child(2)  { animation-delay: 0.10s; }
+.container > div:nth-child(3)  { animation-delay: 0.15s; }
+.container > div:nth-child(4)  { animation-delay: 0.20s; }
+.container > div:nth-child(5)  { animation-delay: 0.25s; }
+.container > div:nth-child(6)  { animation-delay: 0.30s; }
+.container > div:nth-child(7)  { animation-delay: 0.35s; }
+.container > div:nth-child(8)  { animation-delay: 0.40s; }
+.container > div:nth-child(n+9) { animation-delay: 0.45s; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Hover: aylanuvchi neon chegara + glow */
+.container > div:hover {
+  transform: translateY(-6px);
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(from var(--angle), var(--cyan), var(--violet), var(--pink), var(--cyan)) border-box;
+  box-shadow:
+    0 0 26px rgba(124, 92, 255, 0.45),
+    0 14px 40px rgba(0, 0, 0, 0.45);
+  animation: cardIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both, spin 3s linear infinite;
+}
+
+@keyframes spin {
+  to { --angle: 360deg; }
+}
+
+/* ---------- Rasm ---------- */
+.container > div > a {
+  display: block;
+  overflow: hidden;
+  line-height: 0;
+  background: linear-gradient(160deg, #1d2745, #241b45);
+}
+
+.container > div > a:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: -3px;
+}
+
+.container img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s;
+  filter: saturate(0.9);
+}
+
+.container > div:hover img {
+  transform: scale(1.1);
+  filter: saturate(1.15);
+}
+
+/* ---------- Karta matni ---------- */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px 18px;
+}
+
+.body h1 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.3;
+  transition: color 0.25s, text-shadow 0.25s;
+}
+
+.container > div:hover .body h1 {
+  color: var(--cyan);
+  text-shadow: 0 0 14px rgba(53, 224, 255, 0.55);
+}
+
+.body strong {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.body p {
+  order: 3;
+  align-self: flex-start;
+  margin-top: 10px;
+  padding: 3px 12px;
+  border: 1px solid rgba(124, 92, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.14);
+  color: #b9a8ff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: box-shadow 0.25s, background 0.25s, color 0.25s;
+}
+
+.body p::after {
+  content: " yosh";
+}
+
+.container > div:hover .body p {
+  background: rgba(124, 92, 255, 0.3);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(124, 92, 255, 0.7);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--violet), var(--cyan));
+  border-radius: 999px;
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 640px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header_title {
+    flex: 1 1 60%;
+  }
+
+  .searchName,
+  .searchName:focus {
+    order: 3;
+    flex: 1 1 100%;
+  }
+
+  .header_logout {
+    height: 40px;
+    padding: 0 18px;
+  }
+
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .body {
+    padding: 10px 12px 14px;
+  }
+}
+
+/* Animatsiyani yoqtirmaydiganlar uchun */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

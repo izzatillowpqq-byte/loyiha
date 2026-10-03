@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --bg: #0a0e1a;
+  --surface: #121829;
+  --surface-2: #182036;
+  --line: #242d47;
+  --ink: #e9edf8;
+  --muted: #8b95b2;
+  --cyan: #35e0ff;
+  --violet: #7c5cff;
+  --pink: #ff4d8d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  color: var(--ink);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(124, 92, 255, 0.2), transparent 60%),
+    radial-gradient(800px 500px at 100% 100%, rgba(53, 224, 255, 0.14), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* ================= Forma ================= */
+form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px 30px 34px;
+  border: 1px solid transparent;
+  border-radius: 22px;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    conic-gradient(from var(--angle), var(--cyan), var(--violet), var(--pink), var(--cyan)) border-box;
+  box-shadow: 0 0 40px rgba(124, 92, 255, 0.25), 0 20px 50px rgba(0, 0, 0, 0.45);
+  animation: cardIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both, spin 6s linear infinite;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes spin {
+  to { --angle: 360deg; }
+}
+
+/* ---------- Sarlavha ---------- */
+form h1 {
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: clamp(1.6rem, 6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #fff, var(--cyan) 60%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Inputlar ---------- */
+.inpName,
+.inpPass {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.98rem;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s, transform 0.25s;
+}
+
+.inpName::placeholder,
+.inpPass::placeholder {
+  color: var(--muted);
+}
+
+.inpName:hover,
+.inpPass:hover {
+  border-color: #33406a;
+}
+
+.inpName:focus,
+.inpPass:focus {
+  outline: none;
+  border-color: var(--cyan);
+  background: #1c2540;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px rgba(53, 224, 255, 0.15), 0 0 24px rgba(53, 224, 255, 0.35);
+}
+
+/* Brauzer avtomatik to'ldirganda oq fon chiqmasligi uchun */
+.inpName:-webkit-autofill,
+.inpPass:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  box-shadow: 0 0 0 100px var(--surface-2) inset;
+  caret-color: var(--ink);
+}
+
+/* ---------- Yuborish tugmasi ---------- */
+.sendLogin {
+  position: relative;
+  overflow: hidden;
+  height: 52px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--violet), var(--cyan));
+  color: #fff;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(124, 92, 255, 0.45);
+  transition: box-shadow 0.25s, transform 0.2s, filter 0.25s;
+}
+
+/* Yorug'lik "supurgisi" */
+.sendLogin::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+}
+
+.sendLogin:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.2), 0 0 34px rgba(53, 224, 255, 0.75);
+}
+
+.sendLogin:hover::after {
+  animation: sweep 0.8s ease;
+}
+
+.sendLogin:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 0 16px rgba(53, 224, 255, 0.6);
+}
+
+.sendLogin:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 3px;
+}
+
+@keyframes sweep {
+  to { left: 140%; }
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 480px) {
+  form {
+    padding: 32px 20px 26px;
+  }
+}
+
+/* Animatsiyani yoqtirmaydiganlar uchun */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
